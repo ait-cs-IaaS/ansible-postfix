@@ -1,0 +1,19 @@
+---
+# tasks file for postfix
+- name: install postfix-packages
+  apt:
+          name: "{{postfix_packages}}"
+          state: present
+          update_cache: yes
+  tags: [install]
+
+
+- name: configure main.cf
+  template:
+          src: "{{postfix_main_tpl}}"
+          dest: "/etc/postfix/main.cf"
+          mode: "0655"
+          owner: "root"
+          group: "root"
+  tags: [config]
+  notify: restart postfix
