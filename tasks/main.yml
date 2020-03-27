@@ -29,7 +29,7 @@
   when: postfix_smtpd_tls_cert_src is defined and postfix_smtpd_tls_cert_src
   notify: restart postfix
 
-- name: Add server tls certificate ley
+- name: Add server tls certificate key
   copy:
     src: "{{ postfix_smtpd_tls_key_src }}"
     dest: "{{ postfix_smtpd_tls_key }}"
