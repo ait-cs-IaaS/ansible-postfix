@@ -12,7 +12,18 @@
   template:
           src: "{{postfix_main_tpl}}"
           dest: "/etc/postfix/main.cf"
-          mode: "0655"
+          mode: "0644"
+          owner: "root"
+          group: "root"
+  tags: [config]
+  notify: restart postfix
+
+
+- name: configure master.cf
+  template:
+          src: "{{postfix_master_tpl}}"
+          dest: "/etc/postfix/master.cf"
+          mode: "0644"
           owner: "root"
           group: "root"
   tags: [config]
@@ -35,6 +46,6 @@
     dest: "{{ postfix_smtpd_tls_key }}"
     owner: root
     group: root
-    mode: "0640"
+    mode: "0600"
   when: postfix_smtpd_tls_key_src is defined and postfix_smtpd_tls_key_src
   notify: restart postfix
