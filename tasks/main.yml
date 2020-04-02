@@ -29,6 +29,16 @@
   tags: [config]
   notify: restart postfix
 
+- name: configure sender login map pcre
+  template:
+          src: "{{postfix_sender_login_maps_pcre_tpl}}"
+          dest: "/etc/postfix/login_maps.pcre"
+          mode: "0644"
+          owner: "root"
+          group: "root"
+  tags: [config]
+  notify: restart postfix
+
 
 - name: Add server tls certificate
   copy:
