@@ -40,7 +40,7 @@ smtpd_helo_restrictions = permit_mynetworks, reject_invalid_helo_hostname, permi
 
 {% if postfix_dovecot|bool %}
 # SASL
-smtpd_sasl_auth_enable
+smtpd_sasl_auth_enable = yes
 smtpd_sasl_type=dovecot
 smtpd_sasl_path=private/auth
 smtpd_helo_required = yes
