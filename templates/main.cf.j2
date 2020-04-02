@@ -72,7 +72,7 @@ smtpd_sender_restrictions = reject_sender_login_mismatch,
 
 {% endif %}
 
-{% if postfix_sender_login_maps|bool %}
+{% if postfix_sender_login_maps %}
 smtpd_sender_login_maps = {{ postfix_sender_login_maps }}
 {% endif %}
 
