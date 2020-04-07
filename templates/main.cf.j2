@@ -71,9 +71,13 @@ smtpd_sender_restrictions = reject_sender_login_mismatch,
     reject_unknown_sender_domain
 
 {% endif %}
-
-{% if postfix_sender_login_maps %}
-smtpd_sender_login_maps = {{ postfix_sender_login_maps }}
+{% if postfix_sender_login_map_tpls %}
+{% if postfix_sender_login_maps_unionmap %}
+smtpd_sender_login_maps = unionmap:{
+    {{ postfix_sender_login_map_tpls | map(attribute='entry') | list | join(',\n    ') }} }
+{% else %}
+smtpd_sender_login_maps = {{ postfix_sender_login_map_tpls | map(attribute='entry') | list | join(',\n    ') }} 
+{% endif %}
 {% endif %}
 
 myhostname = {{postfix_myhostname}}
