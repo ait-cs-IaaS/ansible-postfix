@@ -23,5 +23,6 @@ postfix_smtpd_tls_cert: /etc/ssl/certs/ssl-cert-snakeoil.pem
 postfix_smtpd_tls_key: /etc/ssl/private/ssl-cert-snakeoil.key
 postfix_smtpd_tls_security_level: may
 
+postfix_dovecot_lmtp: false
 # postfix_smtpd_tls_cert_src: files/mailserver.crt
 # postfix_smtpd_tls_key_src: files/mailserver.key

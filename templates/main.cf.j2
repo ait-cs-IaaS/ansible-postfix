@@ -84,7 +84,11 @@ alias_database = hash:/etc/aliases
 mydestination = {{postfix_mydestination}}
 relayhost = 
 mynetworks = {{postfix_mynetworks}}
+{% if postfix_dovecot_lmtp %}
+mailbox_transport = lmtp:unix:private/dovecot-lmtp
+{% else %}
 home_mailbox = {{ postfix_home_mailbox }}
+{% endif %}
 mailbox_size_limit = 0
 recipient_delimiter = +
 inet_interfaces = all
