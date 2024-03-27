@@ -1,62 +1,59 @@
 ---
 # tasks file for postfix
-- name: install postfix-packages
-  apt:
-          name: "{{postfix_packages}}"
-          state: present
-          update_cache: yes
+- name: Install postfix-packages
+  ansible.builtin.apt:
+    name: '{{ postfix_packages }}'
+    state: present
+    update_cache: true
   tags: [install]
 
-
-- name: configure main.cf
-  template:
-          src: "{{postfix_main_tpl}}"
-          dest: "/etc/postfix/main.cf"
-          mode: "0644"
-          owner: "root"
-          group: "root"
+- name: Configure main.cf
+  ansible.builtin.template:
+    src: '{{ postfix_main_tpl }}'
+    dest: /etc/postfix/main.cf
+    mode: '0644'
+    owner: root
+    group: root
   tags: [config]
-  notify: restart postfix
+  notify: Restart postfix
 
-
-- name: configure master.cf
-  template:
-          src: "{{postfix_master_tpl}}"
-          dest: "/etc/postfix/master.cf"
-          mode: "0644"
-          owner: "root"
-          group: "root"
+- name: Configure master.cf
+  ansible.builtin.template:
+    src: '{{ postfix_master_tpl }}'
+    dest: /etc/postfix/master.cf
+    mode: '0644'
+    owner: root
+    group: root
   tags: [config]
-  notify: restart postfix
+  notify: Restart postfix
 
-- name: configure sender login maps
-  template:
-          src: "{{ item.src }}"
-          dest: "{{ item.dest }}"
-          mode: "0644"
-          owner: "root"
-          group: "root"
-  loop: "{{ postfix_sender_login_map_tpls }}"
+- name: Configure sender login maps
+  ansible.builtin.template:
+    src: '{{ item.src }}'
+    dest: '{{ item.dest }}'
+    mode: '0644'
+    owner: root
+    group: root
+  loop: '{{ postfix_sender_login_map_tpls }}'
   tags: [config]
-  notify: restart postfix
-
+  notify: Restart postfix
 
 - name: Add server tls certificate
-  copy:
-    src: "{{ postfix_smtpd_tls_cert_src }}"
-    dest: "{{ postfix_smtpd_tls_cert }}"
+  ansible.builtin.copy:
+    src: '{{ postfix_smtpd_tls_cert_src }}'
+    dest: '{{ postfix_smtpd_tls_cert }}'
     owner: root
     group: root
-    mode: "0644"
+    mode: '0644'
   when: postfix_smtpd_tls_cert_src is defined and postfix_smtpd_tls_cert_src
-  notify: restart postfix
+  notify: Restart postfix
 
 - name: Add server tls certificate key
-  copy:
-    src: "{{ postfix_smtpd_tls_key_src }}"
-    dest: "{{ postfix_smtpd_tls_key }}"
+  ansible.builtin.copy:
+    src: '{{ postfix_smtpd_tls_key_src }}'
+    dest: '{{ postfix_smtpd_tls_key }}'
     owner: root
     group: root
-    mode: "0600"
+    mode: '0600'
   when: postfix_smtpd_tls_key_src is defined and postfix_smtpd_tls_key_src
-  notify: restart postfix
+  notify: Restart postfix
