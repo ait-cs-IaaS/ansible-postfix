@@ -65,9 +65,10 @@ smtpd_client_restrictions = permit_mynetworks,
     reject_unauth_destination, 
     reject_unauth_pipelining
 smtpd_sender_restrictions = permit_mynetworks,
-    reject_sender_login_mismatch, 
     permit_sasl_authenticated, 
-    reject_unknown_sender_domain
+    reject_unknown_sender_domain,
+    permit
+#    reject_sender_login_mismatch, 
 
 {% endif %}
 {% if postfix_sender_login_map_tpls %}
